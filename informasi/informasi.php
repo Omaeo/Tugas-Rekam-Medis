@@ -70,6 +70,14 @@ include "../layout/user/header_user.php";
                     <img src="../assets/img/poli_gigi.png" alt="Gigi" class="object-cover h-full w-full group-hover:scale-110 transition-transform duration-700">
                 </div>
             </a>
+            
+            <button onclick="history.back()" 
+                class="mb-6 inline-flex items-center gap-2 bg-white/70 backdrop-blur-md 
+                    hover:bg-white text-blue-900 font-medium 
+                    px-5 py-2 rounded-xl shadow-md 
+                    transition duration-300 hover:scale-105">
+                ← Kembali
+            </button>
         </div>
     </main>
     <?php
