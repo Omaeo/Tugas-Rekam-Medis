@@ -1,5 +1,6 @@
 <?php
-include "layout/user/header_user.php"
+include "layout/user/header_user.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -128,6 +129,13 @@ include "layout/user/header_user.php"
             min-height: 120px;
             gap: 15px;
         }
+
+        /* Efek Glow Saat Aktif */
+        .service-card.active {
+            box-shadow: 0 0 15px rgba(30, 77, 161, 0.5);
+            border: 2px solid #1e4da1;
+        }
+
 
         .service-card:hover { transform: translateY(-5px); }
 
@@ -277,18 +285,19 @@ include "layout/user/header_user.php"
                 <p class="mt-4 text-gray-700 text-lg font-semibold">
                     Layanan Kesehatan Terpadu untuk Anda
                 </p>
-                    
+                 <!--
                 <div class="search-bar mt-8">
                     <input type="text" placeholder="Cari Layanan..." class="outline-none">
                     <button class="hover:bg-[#153a7a] transition-colors">Cari</button>
                 </div>
+                -->   
             </section>
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="poli">
         <section class="services-grid">
-            <div class="service-card card-blue cursor-pointer" onclick="location.href='rujukan/rujukan.php?poli=umum'">
+            <div class="service-card card-blue cursor-pointer" onclick="pilihPoli(this, 'umum')">
                 <div class="service-info">
                     <h3>Poli Umum</h3>
                     <p>Pemeriksaan Kesehatan & Pengobatan</p>
@@ -296,7 +305,7 @@ include "layout/user/header_user.php"
                 <img src="assets/img/poli_umum.png" alt="Poli Umum">
             </div>
             
-            <div class="service-card card-blue cursor-pointer" onclick="location.href='rujukan/rujukan.php?poli=lansia'">
+            <div class="service-card card-blue cursor-pointer" onclick="pilihPoli(this, 'lansia')">
                 <div class="service-info">
                     <h3>Poli Lansia</h3>
                     <p>Pemeriksaan Kesehatan & Pengobatan</p>
@@ -304,7 +313,7 @@ include "layout/user/header_user.php"
                 <img src="assets/img/poli_lansia.png" alt="Poli Lansia">
             </div>
 
-            <div class="service-card card-purple cursor-pointer" onclick="location.href='rujukan/rujukan.php?poli=anak'">
+            <div class="service-card card-purple cursor-pointer" onclick="pilihPoli(this, 'anak')">
                 <div class="service-info">
                     <h3>Poli Anak</h3>
                     <p>Pemeriksaan Kesehatan & Pengobatan</p>
@@ -312,7 +321,7 @@ include "layout/user/header_user.php"
                 <img src="assets/img/poli_anak.png" alt="Poli Anak">
             </div>
 
-            <div class="service-card card-green cursor-pointer" onclick="location.href='rujukan/rujukan.php?poli=gigi'">
+            <div class="service-card card-green cursor-pointer" onclick="pilihPoli(this, 'gigi')">
                 <div class="service-info">
                     <h3>Poli Gigi</h3>
                     <p>Pemeriksaan Gigi & Pasang Behel</p>
@@ -323,46 +332,56 @@ include "layout/user/header_user.php"
 
         <hr class="border-t border-blue-100 mb-6">
         
-        <div class="flex justify-center">
-            <a href="pilihan.php" class="w-full bg-[#1e4b8a] hover:bg-[#163a6d] text-white font-bold py-3 px-10 rounded-full shadow-md transition-all duration-300 flex justify-center items-center hover:shadow-lg active:scale-[0.98]">
-                Ambil Antrian
-            </a>
-        </div>
+            <div class="flex justify-center mt-6">
+                <a id="btnAntrian"
+                href="informasi.php"
+                class="hidden w-full bg-[#1e4b8a] hover:bg-[#163a6d] text-white font-bold py-3 px-10 rounded-full shadow-md transition-all duration-300 flex justify-center items-center hover:shadow-lg active:scale-[0.98]">
+                    Ambil Antrian
+                </a>
+            </div>
+
         <hr class="border-t border-blue-100 mt-6">
 
         <section class="jadwal-section">
-            <h2>Jadwal Pemeriksaan Dokter</h2>
+            <div id="jadwal">
+                <h2>Jadwal Pemeriksaan Dokter</h2>
 
-            <div class="tabs flex gap-4 mb-8">
-                <div class="tab-item active cursor-pointer flex items-center gap-2 px-4 py-2 transition-all" onclick="switchTab(this)">
-                    <i class="fa-solid fa-stethoscope"></i> <span>Poli Umum</span>
-                </div>
-                <div class="tab-item cursor-pointer flex items-center gap-2 px-4 py-2 transition-all" onclick="switchTab(this)">
-                    <i class="fa-solid fa-person-cane"></i> <span>Poli Lansia</span>
-                </div>
-                <div class="tab-item cursor-pointer flex items-center gap-2 px-4 py-2 transition-all" onclick="switchTab(this)">
-                    <i class="fa-solid fa-baby"></i> <span>Poli Anak</span>
-                </div>
-                <div class="tab-item cursor-pointer flex items-center gap-2 px-4 py-2 transition-all" onclick="switchTab(this)">
-                    <i class="fa-solid fa-tooth"></i> <span>Poli Gigi</span>
-                </div>
-            </div>
-
-            <div class="jadwal-card">
-                <div class="date-header">Senin, 26 Januari 2026</div>
-                <div class="doctor-row">
-                    <div class="doc-profile">
-                        <i class="fas fa-calendar-check doc-icon"></i>
-                        <div>
-                            <p class="doc-name">Dr. Monica, Sp.M</p>
-                            <p class="doc-days">Senin-Rabu</p>
-                        </div>
+                <div class="tabs flex gap-4 mb-8">
+                    <div class="tab-item active cursor-pointer flex items-center gap-2 px-4 py-2 transition-all" onclick="switchTab(this)">
+                        <i class="fa-solid fa-stethoscope"></i> <span>Poli Umum</span>
                     </div>
-                    <div class="time-badge"><i class="far fa-clock"></i> 08:00-12:00</div>
+                    <div class="tab-item cursor-pointer flex items-center gap-2 px-4 py-2 transition-all" onclick="switchTab(this)">
+                        <i class="fa-solid fa-person-cane"></i> <span>Poli Lansia</span>
+                    </div>
+                    <div class="tab-item cursor-pointer flex items-center gap-2 px-4 py-2 transition-all" onclick="switchTab(this)">
+                        <i class="fa-solid fa-baby"></i> <span>Poli Anak</span>
+                    </div>
+                    <div class="tab-item cursor-pointer flex items-center gap-2 px-4 py-2 transition-all" onclick="switchTab(this)">
+                        <i class="fa-solid fa-tooth"></i> <span>Poli Gigi</span>
+                    </div>
+                </div>
+
+                <div class="jadwal-card">
+                    <div class="date-header">Senin, 26 Januari 2026</div>
+                    <div class="doctor-row">
+                        <div class="doc-profile">
+                            <i class="fas fa-calendar-check doc-icon"></i>
+                            <div>
+                                <p class="doc-name">Dr. Monica, Sp.M</p>
+                                <p class="doc-days">Senin-Rabu</p>
+                            </div>
+                        </div>
+                        <div class="time-badge"><i class="far fa-clock"></i> 08:00-12:00</div>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
+
+    <?php
+    include "layout/user/footer_user.php";
+    ?>
+
 </body>
 <script>
 function switchTab(element) {
@@ -390,5 +409,31 @@ function switchTab(element) {
             containerJadwal.innerHTML = '<p>Gagal memuat jadwal.</p>';
         });
 }
+
+function pilihPoli(element, namaPoli) {
+    const cards = document.querySelectorAll('.service-card');
+    const btn = document.getElementById('btnAntrian');
+
+    // Cek apakah card yang diklik sudah aktif
+    const sudahAktif = element.classList.contains('active');
+
+    // Hapus semua active dulu
+    cards.forEach(card => card.classList.remove('active'));
+
+    if (sudahAktif) {
+        // Kalau tadi sudah aktif → berarti cancel
+        btn.classList.add('hidden');
+        btn.href = "#";
+    } else {
+        // Kalau belum aktif → aktifkan
+        element.classList.add('active');
+
+        btn.classList.remove('hidden');
+        btn.href = "pilihan.php?poli=" + namaPoli;
+
+        btn.scrollIntoView({ behavior: "smooth" });
+    }
+}
+
 </script>
 </html>

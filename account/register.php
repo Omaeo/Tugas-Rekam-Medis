@@ -117,11 +117,28 @@
 
         <div class="login-card">
             <form action="#" method="POST">
+
                 <div class="form-group">
-                    <label>Username</label>
+                    <label>Nomor BPJS</label>
                     <div class="input-wrapper">
                         <i class="fas fa-user main-icon"></i>
-                        <input type="text" name="username" placeholder="Masukkan Username" required>
+                        <input type="text" name="Nomorbpjs" placeholder="Masukkan Nomor BPJS Lengkap" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nama</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user main-icon"></i>
+                        <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Alamat</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-home main-icon"></i>
+                        <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" required>
                     </div>
                 </div>
 

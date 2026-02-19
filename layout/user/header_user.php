@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -240,14 +241,17 @@
 
         <ul class="nav-links">
             <li><a href="home.php" class="active">Beranda</a></li>
-            <li><a href="jadwal_dokter.php">Jadwal Dokter</a></li>
-            <li><a href="atrikel_kesehatan.php">Artikel Kesehatan</a></li>
+            <li><a href="#jadwal">Jadwal Dokter</a></li>
+            <li><a href="informasi/informasi.php">informasi</a></li>
         </ul>
 
         <div class="nav-right">
-            <div class="notif-wrapper">
-                <i class="fas fa-bell notif-icon"></i>
-                <span class="notif-badge">3</span> </div>
+
+            <!--
+                <div class="notif-wrapper">
+                    <i class="fas fa-bell notif-icon"></i>
+                    <div class="notif-badge">3</div>
+            -->
 
             <div class="user-profile">
                 <div class="avatar">
@@ -261,7 +265,7 @@
                 <div class="profile-dropdown">
                     <a href="#"><i class="fas fa-user"></i> Profil Saya</a>
                     <hr>
-                    <a href="#" class="logout"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+                    <a href="account/register.php" class="logout"><i class="fas fa-sign-out-alt"></i> Keluar</a>
                 </div>
             </div>
         </div>

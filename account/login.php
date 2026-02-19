@@ -117,10 +117,10 @@
         <div class="login-card">
             <form action="#" method="POST">
                 <div class="form-group">
-                    <label>Username</label>
+                    <label>Nama</label>
                     <div class="input-wrapper">
                         <i class="fas fa-user main-icon"></i>
-                        <input type="text" name="username" placeholder="Masukkan Username" required>
+                        <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" required>
                     </div>
                 </div>
 

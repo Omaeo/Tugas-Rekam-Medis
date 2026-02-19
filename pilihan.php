@@ -1,78 +1,61 @@
+<?php
+session_start();
+
+// Simulasi data user (biasanya ini dari database/login)
+$_SESSION['nama'] = "Budi Santoso";
+$_SESSION['bpjs'] = "1234567890123";
+$_SESSION['alamat'] = "Jl. Mawar No. 10";
+
+// Ambil poli dari URL
+$poli = $_GET['poli'] ?? 'Umum';
+
+// Buat nomor antrian naik otomatis per poli
+if (!isset($_SESSION['antrian'][$poli])) {
+    $_SESSION['antrian'][$poli] = 1;
+} else {
+    $_SESSION['antrian'][$poli]++;
+}
+
+$nomorAntrian = $_SESSION['antrian'][$poli];
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Pilih Antrean Layanan Kesehatan</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nomor Antrian</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-blue-50 min-h-screen font-sans">
+<body class="bg-blue-100 min-h-screen flex items-center justify-center">
 
-    <header class="relative bg-blue-100 py-16 px-8 overflow-hidden">
-        <div class="absolute top-[-20px] left-[-20px] w-48 h-48 bg-blue-300 rounded-full opacity-50"></div>
-        <div class="absolute top-10 left-40 w-12 h-12 bg-purple-200 rounded-full opacity-60"></div>
-        
-        <div class="relative z-10 max-w-4xl mx-auto text-left">
-            <h1 class="text-4xl font-bold text-gray-800">Pilih Antre di</h1>
-            <p class="text-blue-600 font-medium mt-2">Layanan Kesehatan Terpadu untuk anda</p>
-        </div>
+<div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-xl text-center">
 
-        <div class="absolute right-0 top-0 h-full w-1/3 hidden md:block opacity-40">
-            <img src="assets/img/Group_2.png" alt="Stethoscope" class="object-cover h-full w-full">
-        </div>
-    </header>
+    <h1 class="text-2xl font-bold text-blue-800 mb-6">
+        Nomor Antrian Anda
+    </h1>
 
-    <main class="max-w-4xl mx-auto px-4 -mt-10 relative z-20 pb-20">
-        
-        <div class="bg-white rounded-xl shadow-lg p-6 mb-10 border border-blue-50">
-            <p class="text-blue-900 text-center text-sm font-semibold leading-relaxed">
-                Tombol poli menampilkan layanan sesuai dengan jenis poli, seperti Poli Anak, Poli Lansia, Poli Gigi, dan Poli Umum. 
-                Pilih poli yang sesuai dengan kebutuhan Anda.
-            </p>
-        </div>
+    <div class="bg-blue-50 p-6 rounded-xl mb-6">
 
-        <div class="space-y-6">
+        <p class="mb-2"><strong>Nama:</strong> <?= $_SESSION['nama'] ?></p>
+        <p class="mb-2"><strong>No BPJS:</strong> <?= $_SESSION['bpjs'] ?></p>
+        <p class="mb-2"><strong>Alamat:</strong> <?= $_SESSION['alamat'] ?></p>
+        <p class="mb-2"><strong>Poli:</strong> <?= htmlspecialchars($poli) ?></p>
 
-            <a href="rujukan/rujukan_umum.php" class="group block cursor-pointer bg-gradient-to-r from-purple-50 to-white rounded-3xl shadow-md flex overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-white h-40">
-                <div class="flex-1 p-8 flex flex-col justify-center">
-                    <h2 class="text-3xl font-bold text-gray-800 border-b-2 border-purple-300 w-fit pb-1">Poli Umum</h2>
-                    <p class="text-blue-800 text-xs font-bold mt-2 uppercase tracking-wide">Pemeriksaan Kesehatan & Pengobatan</p>
-                </div>
-                <div class="w-1/2 overflow-hidden bg-gray-200">
-                    <img src="" alt="Umum" class="object-cover h-full w-full group-hover:scale-110 transition-transform duration-700 ">
-                </div>
-            </a>
-        
-            <a href="rujukan/rujukan_anak.php" class="group block cursor-pointer bg-gradient-to-r from-blue-100 to-white rounded-3xl shadow-md flex overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-white h-40">
-                <div class="flex-1 p-8 flex flex-col justify-center">
-                    <h2 class="text-3xl font-bold text-gray-800 border-b-2 border-blue-400 w-fit pb-1">Poli Anak</h2>
-                    <p class="text-blue-800 text-xs font-bold mt-2 uppercase tracking-wide">Pemeriksaan Kesehatan & Pengobatan</p>
-                </div>
-                <div class="w-1/2 overflow-hidden bg-gray-200">
-                    <img src="" alt="Anak" class="object-cover h-full w-full group-hover:scale-110 transition-transform duration-700">
-                </div>
-            </a>
+    </div>
 
-            <a href="rujukan/rujukan_lansia.php" class="group block cursor-pointer bg-gradient-to-r from-purple-50 to-white rounded-3xl shadow-md flex overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-white h-40">
-                <div class="flex-1 p-8 flex flex-col justify-center">
-                    <h2 class="text-3xl font-bold text-gray-800 border-b-2 border-purple-300 w-fit pb-1">Poli lansia</h2>
-                    <p class="text-blue-800 text-xs font-bold mt-2 uppercase tracking-wide">Pemeriksaan Kesehatan & Pengobatan</p>
-                </div>
-                <div class="w-1/2 overflow-hidden bg-gray-200">
-                    <img src="" alt="Umum" class="object-cover h-full w-full group-hover:scale-110 transition-transform duration-700">
-                </div>
-            </a>
-            <a href="rujukan/rujukan_gigi.php" class="group block cursor-pointer bg-gradient-to-r from-purple-50 to-white rounded-3xl shadow-md flex overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-white h-40">
-                <div class="flex-1 p-8 flex flex-col justify-center">
-                    <h2 class="text-3xl font-bold text-gray-800 border-b-2 border-purple-300 w-fit pb-1">Poli Gigi</h2>
-                    <p class="text-blue-800 text-xs font-bold mt-2 uppercase tracking-wide">Pemeriksaan Kesehatan & Pengobatan</p>
-                </div>
-                <div class="w-1/2 overflow-hidden bg-gray-200">
-                    <img src="" alt="Umum" class="object-cover h-full w-full group-hover:scale-110 transition-transform duration-700">
-                </div>
-            </a>
-        </div>
-    </main>
+    <div class="text-6xl font-bold text-blue-700 mb-6">
+        <?= str_pad($nomorAntrian, 3, "0", STR_PAD_LEFT); ?>
+    </div>
+
+    <a href="home.php"
+       class="bg-blue-700 hover:bg-blue-900 text-white px-6 py-3 rounded-full shadow-md transition">
+        Kembali ke Beranda
+    </a>
+
+</div>
 
 </body>
 </html>
+
+
