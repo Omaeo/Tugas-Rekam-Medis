@@ -1,3 +1,37 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "", "db_rekam_medis");
+
+if (!$conn) {
+    die("Koneksi gagal");
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $bpjs = trim($_POST['Nomorbpjs']);
+    $nama = trim($_POST['nama']);
+    $alamat = trim($_POST['alamat']);
+    $password = trim($_POST['password']);
+
+    // cek user sudah ada
+    $cek = mysqli_query($conn, "SELECT * FROM users WHERE nama='$nama'");
+
+    if (mysqli_num_rows($cek) > 0) {
+        echo "<script>alert('Nama sudah digunakan!');</script>";
+    } else {
+
+        $query = "INSERT INTO users (bpjs, nama, alamat, password) 
+                  VALUES ('$bpjs', '$nama', '$alamat', '$password')";
+
+        if (mysqli_query($conn, $query)) {
+            echo "<script>alert('Register berhasil!'); window.location='login.php';</script>";
+        } else {
+            echo "Register gagal: " . mysqli_error($conn);
+        }
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -116,7 +150,7 @@
         <p class="subtitle">Daftar Untuk mengunjungi Website Puskes</p>
 
         <div class="login-card">
-            <form action="#" method="POST">
+            <form method="POST">
 
                 <div class="form-group">
                     <label>Nomor BPJS</label>

@@ -1,3 +1,39 @@
+<?php
+session_start();
+
+$conn = mysqli_connect("localhost", "root", "", "db_rekam_medis");
+
+if (!$conn) {
+    die("Koneksi gagal");
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $nama = $_POST['nama'];
+    $password = $_POST['password'];
+
+    $query = "SELECT * FROM users WHERE nama='$nama'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+
+        if ($password == $user['password']) {
+
+            $_SESSION['login'] = true;
+            $_SESSION['nama'] = $user['nama'];
+            $_SESSION['bpjs'] = $user['bpjs'];
+            $_SESSION['alamat'] = $user['alamat'];
+            
+            header("Location: ../home.php");
+            exit;
+        }
+    }
+
+    echo "Login gagal";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -115,7 +151,7 @@
         <p class="subtitle">Masuk Untuk mengunjungi Website Puskes</p>
 
         <div class="login-card">
-            <form action="#" method="POST">
+            <form action="" method="POST">
                 <div class="form-group">
                     <label>Nama</label>
                     <div class="input-wrapper">

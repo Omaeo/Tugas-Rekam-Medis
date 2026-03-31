@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Mar 2026 pada 14.31
+-- Waktu pembuatan: 31 Mar 2026 pada 04.18
 -- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.0.30
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `database_puskes`
+-- Database: `db_rekam_medis`
 --
 
 -- --------------------------------------------------------
@@ -43,24 +43,6 @@ INSERT INTO `dokter` (`nama_dokter`, `nip`, `poli_dokter`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `login`
---
-
-CREATE TABLE `login` (
-  `nama` varchar(30) NOT NULL,
-  `password` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `login`
---
-
-INSERT INTO `login` (`nama`, `password`) VALUES
-('Dew', 'Meow');
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `pasien`
 --
 
@@ -77,6 +59,30 @@ CREATE TABLE `pasien` (
 
 INSERT INTO `pasien` (`nama`, `nomor_bpjs`, `alamat`, `poli`) VALUES
 ('Dewa Putra Hamdani', '10101', 'Jalan Palaran', 'Poli Umum');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `users`
+--
+
+CREATE TABLE `users` (
+  `nama` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `bpjs` varchar(20) DEFAULT NULL,
+  `alamat` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `users`
+--
+
+INSERT INTO `users` (`nama`, `password`, `bpjs`, `alamat`) VALUES
+('Yusuf', '123\r\n', NULL, NULL),
+('Yusuf', '123', NULL, NULL),
+('Dewa', '1234', '12332', 'Palaran'),
+('Faiz', '787', '9009', 'Kehewanan'),
+('Maulid', '555', '9888', 'Palaran');
 
 --
 -- Indexes for dumped tables
