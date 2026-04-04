@@ -1,9 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['login']))
+    header("location:account/login.php");
+include __DIR__ . '/../../config/app.php'; ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Navbar Puskes</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -258,7 +263,9 @@
                     <img src="https://ui-avatars.com/api/?name=Levan&background=c4d9ff&color=2c5282" alt="Profile">
                 </div>
                 <div class="user-info">
-                    <span class="username">Levan</span>
+                    <span class="username">
+                    <?= isset($_SESSION['nama']) ? $_SESSION['nama'] : ''; ?>
+                     </span>
                     <small class="user-role">Pasien</small> </div>
                 <i class="fas fa-chevron-down dropdown-icon"></i>
                 

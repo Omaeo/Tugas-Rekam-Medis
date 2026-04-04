@@ -1,10 +1,14 @@
 <?php
 session_start();
 
-// Simulasi data user (biasanya ini dari database/login)
-$_SESSION['nama'] = "Budi Santoso";
-$_SESSION['bpjs'] = "1234567890123";
-$_SESSION['alamat'] = "Jl. Mawar No. 10";
+
+$conn = mysqli_connect("localhost", "root", "", "db_rekam_medis");
+
+$nama = $_SESSION['nama'] ?? '';
+
+$query = mysqli_query($conn, "SELECT * FROM users WHERE nama='$nama'");
+$user = mysqli_fetch_assoc($query);
+
 
 // Ambil poli dari URL
 $poli = $_GET['poli'] ?? 'Umum';
@@ -37,9 +41,9 @@ $nomorAntrian = $_SESSION['antrian'][$poli];
 
     <div class="bg-blue-50 p-6 rounded-xl mb-6">
 
-        <p class="mb-2"><strong>Nama:</strong> <?= $_SESSION['nama'] ?></p>
-        <p class="mb-2"><strong>No BPJS:</strong> <?= $_SESSION['bpjs'] ?></p>
-        <p class="mb-2"><strong>Alamat:</strong> <?= $_SESSION['alamat'] ?></p>
+        <p><strong>Nama:</strong> <?= $_SESSION['nama'] ?: '-' ?></p>
+        <p><strong>No BPJS:</strong> <?= $_SESSION['bpjs'] ?: '-' ?></p>
+        <p><strong>Alamat:</strong> <?= $_SESSION['alamat'] ?: '-' ?></p>
         <p class="mb-2"><strong>Poli:</strong> <?= htmlspecialchars($poli) ?></p>
 
     </div>
