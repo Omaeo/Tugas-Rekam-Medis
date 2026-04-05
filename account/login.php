@@ -1,6 +1,5 @@
 <?php
 session_start();
-$error = false;
 
 $conn = mysqli_connect("localhost", "root", "", "db_rekam_medis");
 
@@ -25,18 +24,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['nama'] = $user['nama'];
             $_SESSION['bpjs'] = $user['bpjs'];
             $_SESSION['alamat'] = $user['alamat'];
-
+            
             header("Location: ../home.php");
             exit;
-        } else {
-            $error = true; // password salah
         }
-
-    } else {
-        $error = true; // user tidak ditemukan
     }
+
+    echo "Login gagal";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -154,9 +151,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p class="subtitle">Masuk Untuk mengunjungi Website Puskes</p>
 
         <div class="login-card">
-            <?php if ($error): ?>
-            <script>alert('Login gagal! Nama atau password salah');</script>
-            <?php endif; ?>
             <form action="" method="POST">
                 <div class="form-group">
                     <label>Nama</label>
@@ -177,7 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <button type="submit" class="btn-login">Masuk</button>
             </form>
-                
+
             <p class="footer-text">
                 Belum punya akun? <a href="register.php">Register Sekarang</a>
             </p>

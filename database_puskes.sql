@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Mar 2026 pada 18.05
+-- Waktu pembuatan: 31 Mar 2026 pada 04.18
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -39,24 +39,6 @@ CREATE TABLE `dokter` (
 
 INSERT INTO `dokter` (`nama_dokter`, `nip`, `poli_dokter`) VALUES
 ('Dr. Idah', '1092', 'Poli Umum');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `login`
---
-
-CREATE TABLE `login` (
-  `nama` varchar(30) NOT NULL,
-  `password` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `login`
---
-
-INSERT INTO `login` (`nama`, `password`) VALUES
-('Dew', 'Meow');
 
 -- --------------------------------------------------------
 
@@ -98,7 +80,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`nama`, `password`, `bpjs`, `alamat`) VALUES
 ('Yusuf', '123\r\n', NULL, NULL),
 ('Yusuf', '123', NULL, NULL),
-('Dewa', '1234', '12332', 'Palaran');
+('Dewa', '1234', '12332', 'Palaran'),
+('Faiz', '787', '9009', 'Kehewanan'),
+('Maulid', '555', '9888', 'Palaran');
 
 --
 -- Indexes for dumped tables
