@@ -1,9 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "", "db_rekam_medis");
-
-if (!$conn) {
-    die("Koneksi gagal");
-}
+include '../config/connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -53,12 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 0;
             font-family: 'Poppins', sans-serif;
             background: var(--bg-light);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            /* overflow: hidden; */
             position: relative;
+            padding: 20px 0;
         }
 
         /* Ornamen Lingkaran */
