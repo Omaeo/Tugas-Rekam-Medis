@@ -1,39 +1,44 @@
 <?php
-include '../config/connect.php';
+session_start();
+
+include __DIR__ . '/../config/app.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $bpjs = trim($_POST['Nomorbpjs']);
     $nama = trim($_POST['nama']);
-    $alamat = trim($_POST['alamat']);
+    $nip = trim($_POST['nip']);
     $password = trim($_POST['password']);
 
-    // cek user sudah ada
-    $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE bpjs='$bpjs'");
+    $query = "SELECT * FROM users 
+          WHERE nama='$nama' 
+          AND nip='$nip' 
+          AND password='$password'";
 
-    if (mysqli_num_rows($cek) > 0) {
-        echo "<script>alert('Nomor BPJS sudah digunakan!');</script>";
-    } else {
+    $result = mysqli_query($conn, $query);
 
-        $query = "INSERT INTO pasien (bpjs, nama, alamat, password) 
-                  VALUES ('$bpjs', '$nama', '$alamat', '$password')";
+    if ($result && mysqli_num_rows($result) > 0) {
+        $admin = mysqli_fetch_assoc($result);
 
-        if (mysqli_query($conn, $query)) {
-            echo "<script>alert('Register berhasil!'); window.location='login.php';</script>";
-        } else {
-            echo "Register gagal: " . mysqli_error($conn);
-        }
+        $_SESSION['login'] = true;
+        $_SESSION['nama'] = $admin['nama'];
+
+        header("Location: ../admin/home_admin.php");
+        exit;
     }
+
+    echo "<script>
+        alert('Login gagal!');
+        window.location='loginadmind.php';
+    </script>";
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Website Puskes</title>
+    <title>Login Website Puskes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -79,7 +84,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .form-group { text-align: left; margin-bottom: 20px; }
         label { display: block; font-weight: 700; margin-bottom: 8px; color: #000; }
 
-        /* Input Container untuk Ikon */
         .input-wrapper {
             position: relative;
             display: flex;
@@ -143,20 +147,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="circle c3"></div>
 
     <div class="login-container">
-        <h1>Register</h1>
-        <p class="subtitle">Daftar Untuk mengunjungi Website Puskes</p>
+        <h1>Login</h1>
+        <p class="subtitle">Masuk Untuk mengunjungi Website Puskes</p>
 
         <div class="login-card">
-            <form method="POST">
-
-                <div class="form-group">
-                    <label>Nomor BPJS</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-user main-icon"></i>
-                        <input type="text" name="Nomorbpjs" placeholder="Masukkan Nomor BPJS Lengkap" required>
-                    </div>
-                </div>
-
+            <form action="" method="POST">
                 <div class="form-group">
                     <label>Nama</label>
                     <div class="input-wrapper">
@@ -165,11 +160,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
 
+                <div class="login-card">
+            <form action="" method="POST">
                 <div class="form-group">
-                    <label>Alamat</label>
+                    <label>NIP</label>
                     <div class="input-wrapper">
-                        <i class="fas fa-home main-icon"></i>
-                        <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" required>
+                        <i class="fas fa-user main-icon"></i>
+                        <input type="text" name="nip" placeholder="Masukkan NIP kamu" required>
                     </div>
                 </div>
 
@@ -181,12 +178,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <i class="fas fa-eye toggle-password" id="toggleIcon"></i>
                     </div>
                 </div>
-
-                <button type="submit" class="btn-login">Daftar Sekarang</button>
+            
+                <button type="submit" class="btn-login">Masuk</button>
             </form>
 
             <p class="footer-text">
-                Sudah punya akun? <a href="login.php">Login Sekarang</a>
+                Belum punya akun? <a href="register_admind.php">Register Sekarang</a>
             </p>
         </div>
     </div>

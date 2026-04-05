@@ -118,12 +118,12 @@
         <p class="subtitle">Melayani dengan <span>Sepenuh Hati</span></p>
 
         <div class="selection-card">
-            <a href="account/login_admin.php" class="role-option">
+            <a href="account/register_admin.php" class="role-option">
                 <img src="https://cdn-icons-png.flaticon.com/512/2328/2328966.png" alt="Admin">
                 <p>Masuk Sebagai Admin</p>
             </a>
 
-            <a href="account/login.php" class="role-option">
+            <a href="account/register.php" class="role-option">
                 <img src="https://cdn-icons-png.flaticon.com/512/1256/1256650.png" alt="User">
                 <p>Masuk Sebagai User</p>
             </a>

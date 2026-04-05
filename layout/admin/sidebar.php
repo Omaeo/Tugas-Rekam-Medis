@@ -102,33 +102,40 @@
         <span>Puskes</span>
     </div>
 
-    <ul class="menu" id="sidebarMenu">
-        <li class="menu-item active" onclick="pindahMenu(this)">
-            <i class="fa-solid fa-chart-line"></i>
-            <span>Dashboard</span>
+        <ul class="menu" id="sidebarMenu">
+         <a href="../admin/home_admin.php" class="menu-link">
+        <li class="menu-item active">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Dashboard</span>
         </li>
+        </a>
+
+
         <li class="menu-item" onclick="pindahMenu(this)">
             <i class="fa-solid fa-hospital"></i>
             <span>Poliklinik</span>
         </li>
-        <li class="menu-item" onclick="pindahMenu(this)">
-            <i class="fa-solid fa-hospital-user"></i>
-            <span><a href="../admin/data_pasien.php">Data Pasien</a></span>
+
+        <a href="../admin/data_pasien.php" class="menu-link">
+        <li class="menu-item">
+        <i class="fa-solid fa-hospital-user"></i>
+        <span>Data Pasien</span>
         </li>
+        </a>
+
+        <a href="../admin/data_dokter.php" class="menu-link">
         <li class="menu-item" onclick="pindahMenu(this)">
             <i class="fa-solid fa-stethoscope"></i>
             <span>Dokter</span>
+            </a>
         </li>
-        <li class="menu-item" onclick="pindahMenu(this)">
-            <i class="fa-solid fa-gear"></i>
-            <span>Pengaturan</span>
-        </li>
+        
     </ul>
 
     <div class="profile-box">
         <i class="fa-solid fa-circle-user"></i>
         <p style="font-size: 14px; margin-bottom: 5px;">Admin Sistem</p>
-        <a href="logout.php" class="logout-btn">Logout</a>
+        <a href="/Tugas-Rekam-Medis/account/logout.php" class="logout-btn">Logout</a>
     </div>
 </aside>
 

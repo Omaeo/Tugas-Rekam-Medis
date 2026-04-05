@@ -1,4 +1,32 @@
-<!DOCTYPE html>
+<?php
+include '../config/connect.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $nama = trim($_POST['nama']);
+    $nip = trim($_POST['nip']);
+    $password = trim($_POST['password']);
+
+    // cek admin sudah ada
+    $cek = mysqli_query($conn, "SELECT * FROM users WHERE nip='$nip'");
+
+    if (mysqli_num_rows($cek) > 0) {
+        echo "<script>alert('NIP sudah digunakan!');</script>";
+    } else {
+
+        $query = "INSERT INTO users (nama, nip, password) 
+                  VALUES ('$nama', '$nip', '$password')";
+
+        if (mysqli_query($conn, $query)) {
+            echo "<script>alert('Register admin berhasil!'); window.location='loginadmind.php';</script>";
+        } else {
+            echo "Register gagal: " . mysqli_error($conn);
+        }
+    }
+}
+?>
+
+<!DOCTYPE html> 
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -147,20 +175,9 @@
                 <input type="password" name="password" placeholder="Masukkan Password" required>
             </div>
 
-            <div class="form-group">
-                <label>Pilihan Poli</label>
-                <select name="poli" required>
-                    <option value="" disabled selected>Pilih Poli</option>
-                    <option value="Poli Anak">🧸 Poli Anak</option>
-                    <option value="Poli Umum">🏥 Poli Umum</option>
-                    <option value="Poli Lansia">👴👵 Poli Lansia</option>
-                    <option value="Poli Gigi">🦷 Poli Gigi</option>
-                </select>
-            </div>
-
             <button type="submit" class="btn-daftar">daftar</button>
             <p class="footer-text">
-                Sudah punya akun? <a href="login.php">Login Sekarang</a>
+                Sudah punya akun? <a href="loginadmind.php">Login Sekarang</a>
             </p>
         </form>
     </div>

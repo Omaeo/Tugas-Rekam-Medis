@@ -1,3 +1,16 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "", "db_rekam_medis");
+
+// total pasien hari ini
+$today = date('Y-m-d');
+$queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM pasien WHERE tanggal='$today'");
+$dataTotal = mysqli_fetch_assoc($queryTotal);
+$totalPasien = $dataTotal['total'];
+
+// ambil semua data pasien (BIAR $query ADA)
+$query = mysqli_query($conn, "SELECT * FROM pasien");
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -220,7 +233,7 @@ body {
                 <div class="card pasien">
                     <h3>Pasien Hari Ini</h3>
                     <i class="fa fa-user-group big-icon"></i>
-                    <h2>56 Pasien</h2>
+                    <h2><?= $totalPasien ?> Pasien</h2>
                 </div>
 
             </div>

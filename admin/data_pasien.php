@@ -1,3 +1,23 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "", "db_rekam_medis");
+
+// tanggal hari ini
+$today = date('Y-m-d');
+
+// total pasien hari ini
+$queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM pasien WHERE tanggal='$today'");
+$dataTotal = mysqli_fetch_assoc($queryTotal);
+$totalPasien = $dataTotal['total'];
+
+// ambil data pasien untuk tabel
+$query = mysqli_query($conn, "SELECT * FROM pasien ORDER BY tanggal DESC");
+
+// cek error query
+if (!$query) {
+    die("Error: " . mysqli_error($conn));
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -200,7 +220,10 @@ body {
                         <i class="fa fa-users" style="font-size: 30px; color: #6c8cff;"></i>
                         <div>
                             <h4 style="color: #888; font-size: 14px;">Total Pasien Hari Ini</h4>
-                            <h2 style="color: #2b3674;">56 Pasien</h2>
+                        <?php
+                        $total = mysqli_num_rows($query);
+                        ?>
+                       <h2 style="color: #2b3674;"><?= $totalPasien ?> Pasien</h2>
                         </div>
                     </div>
                 </div>
@@ -213,54 +236,22 @@ body {
                                 <th>Nama</th>
                                 <th>No. BPJS</th>
                                 <th>Tujuan</th>
-                                <th>Keluhan / Kondisi Medis</th>
-                                <th>Tindakan Medis</th>
                                 <th>Tanggal</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php while ($row = mysqli_fetch_assoc($query)) { ?>
                             <tr>
-                                <td>00120209</td>
-                                <td><b>Maulid Ahmad Muafa</b></td>
-                                <td>0029392342</td>
-                                <td>RSJD Samarinda</td>
-                                <td>Melihat hal yang tidak nyata</td>
-                                <td>Pengecekan Mental Pasien</td>
-                                <td>10/01/2026</td>
-                                <td><span class="badge diterima">Diterima</span></td>
-                            </tr>
-                            <tr>
-                                <td>00123912</td>
-                                <td><b>Dewa Putra Hamdani</b></td>
-                                <td>0023423322</td>
-                                <td>RSJD Samarinda</td>
-                                <td>Melihat hal yang tidak nyata</td>
-                                <td>Pengecekan Mental Pasien</td>
-                                <td>09/01/2026</td>
-                                <td><span class="badge diterima">Diterima</span></td>
-                            </tr>
-                            <tr>
-                                <td>0028937</td>
-                                <td><b>Muhammad Fawwaz Adlan</b></td>
-                                <td>0034534534</td>
-                                <td>RSUD Samarinda</td>
-                                <td>Melihat hal yang tidak nyata</td>
-                                <td>Pengecekan Mental Pasien</td>
-                                <td>08/01/2026</td>
-                                <td><span class="badge dikirim">Dikirim</span></td>
-                            </tr>
-                            <tr>
-                                <td>00873480</td>
-                                <td><b>Muhammad Fardan</b></td>
-                                <td>0056756756</td>
-                                <td>RSUD Samarinda</td>
-                                <td>Melihat hal yang tidak nyata</td>
-                                <td>Pengecekan Mental Pasien</td>
-                                <td>05/01/2026</td>
-                                <td><span class="badge ditolak">Ditolak</span></td>
-                            </tr>
-                        </tbody>
+                            <td><?= str_pad($row['nomor'], 6, "0", STR_PAD_LEFT); ?></td>
+                            <td><b><?= $row['nama']; ?></b></td>
+                            <td><?= $row['bpjs']; ?></td>
+                            <td><?= $row['poli']; ?></td>
+                            <td><?= $row['tanggal']; ?></td>
+                        <td><span class="badge diterima">Masuk</span></td>
+                        </tr>
+                        <?php } ?>
+                    </tbody>
                     </table>
                 </div>
 
