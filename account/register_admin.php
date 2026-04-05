@@ -158,7 +158,10 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn-daftar">Masuk</button>
+            <button type="submit" class="btn-daftar">daftar</button>
+            <p class="footer-text">
+                Sudah punya akun? <a href="login.php">Login Sekarang</a>
+            </p>
         </form>
     </div>
 </body>
