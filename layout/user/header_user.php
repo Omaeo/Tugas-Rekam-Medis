@@ -259,9 +259,13 @@ include __DIR__ . '/../../config/app.php'; ?>
             -->
 
             <div class="user-profile">
-                <div class="avatar">
-                    <img src="https://ui-avatars.com/api/?name=Levan&background=c4d9ff&color=2c5282" alt="Profile">
-                </div>
+            <div class="avatar">
+                <?php 
+                    $namaUser = isset($_SESSION['nama']) ? urlencode($_SESSION['nama']) : 'User';
+                    $avatarUrl = "https://ui-avatars.com/api/?name=$namaUser&background=c4d9ff&color=2c5282&font-size=0.33&bold=true";
+                ?>
+                <img src="<?= $avatarUrl ?>" alt="Profile">
+            </div>
                 <div class="user-info">
                     <span class="username">
                     <?= isset($_SESSION['nama']) ? $_SESSION['nama'] : ''; ?>
@@ -272,7 +276,7 @@ include __DIR__ . '/../../config/app.php'; ?>
                 <div class="profile-dropdown">
                     <a href="#"><i class="fas fa-user"></i> Profil Saya</a>
                     <hr>
-                    <a href="account/register.php" class="logout"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+                    <a href="account/login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Keluar</a>
                 </div>
             </div>
         </div>
