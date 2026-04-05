@@ -1,3 +1,7 @@
+<?php
+$current = basename($_SERVER['PHP_SELF']);
+?>
+
 <style>
     .sidebar {
         width: 260px;
@@ -103,25 +107,25 @@
     </div>
 
     <ul class="menu" id="sidebarMenu">
-        <li class="menu-item active" onclick="pindahMenu(this)">
+        <li class="menu-item <?= ($current == 'home_admin.php') ? 'active' : '' ?>" 
+            onclick="window.location.href='../admin/home_admin.php'">
             <i class="fa-solid fa-chart-line"></i>
             <span>Dashboard</span>
         </li>
-        <li class="menu-item" onclick="pindahMenu(this)">
+        <li class="menu-item <?= ($current == 'data_poli.php') ? 'active' : '' ?>" 
+            onclick="window.location.href='../admin/data_poli.php'">
             <i class="fa-solid fa-hospital"></i>
             <span>Poliklinik</span>
         </li>
-        <li class="menu-item" onclick="pindahMenu(this)">
+        <li class="menu-item <?= ($current == 'data_pasien.php') ? 'active' : '' ?>" 
+            onclick="window.location.href='../admin/data_pasien.php'">
             <i class="fa-solid fa-hospital-user"></i>
-            <span><a href="../admin/data_pasien.php">Data Pasien</a></span>
+            <span>Data Pasien</span>
         </li>
-        <li class="menu-item" onclick="pindahMenu(this)">
+        <li class="menu-item <?= ($current == 'data_dokter.php') ? 'active' : '' ?>" 
+            onclick="window.location.href='../admin/data_dokter.php'">
             <i class="fa-solid fa-stethoscope"></i>
             <span>Dokter</span>
-        </li>
-        <li class="menu-item" onclick="pindahMenu(this)">
-            <i class="fa-solid fa-gear"></i>
-            <span>Pengaturan</span>
         </li>
     </ul>
 
@@ -133,6 +137,8 @@
 </aside>
 
 <script>
+
+/*
 function pindahMenu(elemen) {
     // 1. Cari semua menu yang punya class 'menu-item'
     const semuaMenu = document.querySelectorAll('.menu-item');
@@ -150,5 +156,6 @@ function pindahMenu(elemen) {
     if (judulNavbar) {
         judulNavbar.innerText = elemen.querySelector('span').innerText;
     }
-}
+} */
+
 </script>

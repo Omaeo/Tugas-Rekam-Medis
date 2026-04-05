@@ -1,39 +1,45 @@
 <?php
-include '../config/connect.php';
+session_start();
+
+include __DIR__ . '/../config/app.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $bpjs = trim($_POST['Nomorbpjs']);
-    $nama = trim($_POST['nama']);
-    $alamat = trim($_POST['alamat']);
-    $password = trim($_POST['password']);
+    $nama = $_POST['nama'];
+    $password = $_POST['password'];
 
-    // cek user sudah ada
-    $cek = mysqli_query($conn, "SELECT * FROM users WHERE bpjs='$bpjs'");
+    // Ambil data dari tabel dokter
+    $query = "SELECT * FROM dokter WHERE nama='$nama'";
+    $result = mysqli_query($conn, $query);
 
-    if (mysqli_num_rows($cek) > 0) {
-        echo "<script>alert('Nomor BPJS sudah digunakan!');</script>";
-    } else {
+    if ($result && mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
 
-        $query = "INSERT INTO users (bpjs, nama, alamat, password) 
-                  VALUES ('$bpjs', '$nama', '$alamat', '$password')";
+        // Cek password saja
+        if ($password == $user['password']) {
 
-        if (mysqli_query($conn, $query)) {
-            echo "<script>alert('Register berhasil!'); window.location='login.php';</script>";
-        } else {
-            echo "Register gagal: " . mysqli_error($conn);
+            $_SESSION['login'] = true;
+            $_SESSION['nama'] = $user['nama'];
+            $_SESSION['nip'] = $user['nip'];
+            $_SESSION['poli'] = $user['poli'];
+
+            // 🔥 LANGSUNG MASUK TANPA CEK ROLE
+            header("Location: ../admin/home_admin.php");
+            exit;
         }
     }
-}
-?>
 
+    echo "Login gagal";
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Website Puskes</title>
+    <title>Login Website Puskes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -79,7 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .form-group { text-align: left; margin-bottom: 20px; }
         label { display: block; font-weight: 700; margin-bottom: 8px; color: #000; }
 
-        /* Input Container untuk Ikon */
         .input-wrapper {
             position: relative;
             display: flex;
@@ -143,33 +148,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="circle c3"></div>
 
     <div class="login-container">
-        <h1>Register</h1>
-        <p class="subtitle">Daftar Untuk mengunjungi Website Puskes</p>
+        <h1>Login Admin</h1>
+        <p class="subtitle">Masuk Untuk Admin Website Puskes</p>
 
         <div class="login-card">
-            <form method="POST">
-
-                <div class="form-group">
-                    <label>Nomor BPJS</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-user main-icon"></i>
-                        <input type="text" name="Nomorbpjs" placeholder="Masukkan Nomor BPJS Lengkap" required>
-                    </div>
-                </div>
-
+            <form action="" method="POST">
                 <div class="form-group">
                     <label>Nama</label>
                     <div class="input-wrapper">
                         <i class="fas fa-user main-icon"></i>
                         <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Alamat</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-home main-icon"></i>
-                        <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" required>
                     </div>
                 </div>
 
@@ -182,12 +170,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
 
-                <button type="submit" class="btn-login">Daftar Sekarang</button>
+                <button type="submit" class="btn-login">Masuk</button>
             </form>
 
-            <p class="footer-text">
-                Sudah punya akun? <a href="login.php">Login Sekarang</a>
-            </p>
         </div>
     </div>
 

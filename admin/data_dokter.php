@@ -1,7 +1,7 @@
 <?php
 include '../config/app.php';
 
-$query = mysqli_query($conn, "SELECT * FROM pasien");
+$query = mysqli_query($conn, "SELECT * FROM dokter");
 ?>
 
 <!DOCTYPE html>
@@ -179,6 +179,28 @@ body {
     .styled-table tbody tr:hover {
         background-color: #fcfdfe;
     }
+    /* floating button tambah */ 
+    .fab {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: #6c8cff;
+        color: white;
+        font-size: 30px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 60px;
+        text-decoration: none;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        transition: 0.3s;
+    }
+
+    .fab:hover {
+        background: #4cafef;
+        transform: scale(1.1);
+    }
 </style>
 </head>
 <body>
@@ -194,7 +216,7 @@ body {
 
         <!-- Navbar Atas -->
         <div class="navbar">
-            <h2 id="title">Pasien</h2>
+            <h2 id="title">Dokter</h2>
             <i class="fa fa-bell"></i>
         </div>
 
@@ -205,52 +227,47 @@ body {
                     <div class="card" style="text-align: left; padding: 15px 25px; display: flex; align-items: center; gap: 20px;">
                         <i class="fa fa-users" style="font-size: 30px; color: #6c8cff;"></i>
                         <div>
-                            <h4 style="color: #888; font-size: 14px;">Daftar Pasien</h4>
-                            <h2 style="color: #2b3674;">56 Pasien</h2>
+                            <h2 style="color: #2b3674;">Daftar Dokter Puskes</h2>
                         </div>
                     </div>
                 </div>
 
-                <div class="table-container">
+               <div class="table-container">
                     <table class="styled-table">
                         <thead>
                             <tr>
-                                <th>No. Rujukan</th>
+                                <th>No</th>
                                 <th>Nama</th>
-                                <th>No. BPJS</th>
-                                <th>Tujuan</th>
-                                <th>Keluhan / Kondisi Medis</th>
-                                <th>Tindakan Medis</th>
-                                <th>Tanggal</th>
-                                <th>Status</th>
+                                <th>NIP</th>
+                                <th>Poli</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
-                            <tbody>
-                            <?php 
-                            $no = 1;
-                            while($data = mysqli_fetch_assoc($query)) {
+                        <tbody>
 
-                                // 🔥 Tentukan class badge berdasarkan status
-                                if ($data['status'] == 'Selesai') {
-                                    $badge = 'done';
-                                } elseif ($data['status'] == 'Menunggu') {
-                                    $badge = 'wait';
-                                } else {
-                                    $badge = 'cancel';
-                                }
-                            ?>
+                        <?php 
+                        $no = 1;
+                        while($data = mysqli_fetch_assoc($query)) {
+                        ?>
+
                             <tr>
                                 <td><?= $no++; ?></td>
-                                <td><b><?= $data['nama']; ?></b></td>
-                                <td><?= $data['nomor_bpjs']; ?></td>
+                                <td><?= $data['nama']; ?></td>
+                                <td><?= $data['nip']; ?></td>
                                 <td><?= $data['poli']; ?></td>
-                                <td><?= $data['keluhan']; ?></td>
-                                <td><?= $data['tindakan']; ?></td>
-                                <td><?= $data['tanggal']; ?></td>
-                                <td><span class="badge <?= $badge; ?>"><?= $data['status']; ?></span></td>
+                                <td>
+                                    <a href="CRUD/edit_dokter.php?nip=<?= $data['nip']; ?>" style="color:blue;">Edit</a> |
+                                    <a href="CRUD/hapus_dokter.php?nip=<?= $data['nip']; ?>" 
+                                    onclick="return confirm('Yakin hapus?')" 
+                                    style="color:red;">
+                                    Hapus
+                                    </a>
+                                </td>
                             </tr>
-                            <?php } ?>
-                            </tbody>
+
+                        <?php } ?>
+
+                        </tbody>
                     </table>
                 </div>
 
@@ -258,6 +275,8 @@ body {
     </div>
 
 </div>
+
+<a href="CRUD/tambah_dokter.php" class="fab">+</a>
 
 </body>
 </html>
