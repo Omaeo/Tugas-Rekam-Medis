@@ -165,6 +165,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <i class="fas fa-eye toggle-password" id="toggleIcon"></i>
                     </div>
                 </div>
+                <div class="form-group">
+                <label>Role</label>
+                <select name="poli" required>
+                    <option value="" disabled selected>Pilih Poli</option>
+                    <option value="Poli Anak"> admin</option>
+                    <option value="Poli Umum"> user</option>
+                </select>
+            </div>
 
                 <button type="submit" class="btn-login">Masuk</button>
             </form>
