@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $nama = trim($_POST['nama']);
       $password = trim($_POST['password']);
 
-    $query = "SELECT * FROM pasien WHERE nama='$nama'";
+    $query = "SELECT * FROM users WHERE nama='$nama'";
     $result = mysqli_query($conn, $query);
 
     if ($result && mysqli_num_rows($result) > 0) {

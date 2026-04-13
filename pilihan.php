@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$conn = mysqli_connect("localhost", "root", "", "db_rekam_medis");
+$conn = mysqli_connect("localhost", "root", "", "db_rekam_medis", 3307);
 
 // Validasi login
 if (!isset($_SESSION['login'])) {
@@ -21,23 +21,23 @@ $poli = $_GET['poli'] ?? 'Umum';
 $tanggal = date('Y-m-d');
 
 // Cek apakah user sudah ambil antrian hari ini
-$cek = mysqli_query($conn, "SELECT * FROM pasien 
-                           WHERE bpjs='$bpjs' 
-                           AND poli='$poli' 
+$cek = mysqli_query($conn, "SELECT * FROM antrian 
+                           WHERE nomor_bpjs='$bpjs' 
+                           AND poli_tujuan='$poli' 
                            AND tanggal='$tanggal'");
 
 if (mysqli_num_rows($cek) > 0) {
 
     // Kalau sudah ada → ambil nomor lama
     $data = mysqli_fetch_assoc($cek);
-    $nomorAntrian = $data['nomor'];
+    $nomorAntrian = $data['nomor_antrian'];
 
 } else {
 
     // Ambil nomor terakhir
-    $result = mysqli_query($conn, "SELECT MAX(nomor) as last 
-                                  FROM pasien 
-                                  WHERE poli='$poli' AND tanggal='$tanggal'");
+    $result = mysqli_query($conn, "SELECT MAX(nomor_antrian) as last 
+                                  FROM antrian
+                                  WHERE poli_tujuan='$poli' AND tanggal='$tanggal'");
 
     $data = mysqli_fetch_assoc($result);
 
@@ -45,9 +45,9 @@ if (mysqli_num_rows($cek) > 0) {
 
     // Simpan ke database
     mysqli_query($conn, "INSERT INTO pasien 
-        (nama, bpjs, alamat, poli, nomor, tanggal)
+        (nama, nomor_bpjs, alamat, poli)
         VALUES 
-        ('$nama', '$bpjs', '$alamat', '$poli', '$nomorAntrian', '$tanggal')");
+        ('$nama', '$bpjs', '$alamat', '$poli')");
 }
 ?>
 

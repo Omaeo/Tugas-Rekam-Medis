@@ -9,14 +9,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST['password']);
 
     // cek user sudah ada
-    $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE bpjs='$bpjs'");
+    $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nomor_bpjs='$bpjs'");
 
     if (mysqli_num_rows($cek) > 0) {
         echo "<script>alert('Nomor BPJS sudah digunakan!');</script>";
     } else {
 
-        $query = "INSERT INTO pasien (bpjs, nama, alamat, password) 
-                  VALUES ('$bpjs', '$nama', '$alamat', '$password')";
+        $query = "INSERT INTO pasien (nomor_bpjs, nama, alamat)
+                  VALUES ('$bpjs', '$nama', '$alamat')";
 
         if (mysqli_query($conn, $query)) {
             echo "<script>alert('Register berhasil!'); window.location='login.php';</script>";
